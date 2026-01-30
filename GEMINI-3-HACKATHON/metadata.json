@@ -1,0 +1,7 @@
+{
+  "name": "LinguaBot - AI English Speaking Coach",
+  "description": "A conversational voice-to-voice AI tutor that helps you practice English, provides real-time corrections, and evaluates your speaking performance based on IELTS standards.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
