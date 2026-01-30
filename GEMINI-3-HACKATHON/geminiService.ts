@@ -2,7 +2,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Message, Role, EvaluationResult } from "./types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
 
 const SYSTEM_INSTRUCTION = `You are LinguaBot, a friendly English speaking coach. 
 Reply conversationally in spoken English, not formal writing.
@@ -12,6 +12,12 @@ Gently correct major grammar mistakes by naturally restating the correct sentenc
 
 export const getGeminiChatResponse = async (history: Message[]): Promise<string> => {
   try {
+    const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("Gemini API Key is missing. Please check your environment variables.");
+    }
+    const ai = new GoogleGenAI({ apiKey });
+
     const contents = history.map(msg => ({
       role: msg.role === Role.USER ? 'user' : 'model',
       parts: [{ text: msg.content }]
@@ -37,6 +43,12 @@ export const getGeminiChatResponse = async (history: Message[]): Promise<string>
 
 export const evaluateSpeaking = async (text: string): Promise<EvaluationResult> => {
   try {
+    const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("Gemini API Key is missing. Please check your environment variables.");
+    }
+    const ai = new GoogleGenAI({ apiKey });
+
     const prompt = `You are an IELTS speaking examiner.
 Evaluate the following spoken answer and return ONLY valid JSON:
 
